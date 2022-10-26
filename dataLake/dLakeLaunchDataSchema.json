@@ -1,0 +1,45 @@
+db.runCommand(
+	{
+		sqlSetSchema: "launchData_20220821T185010Z",
+		schema: {
+			version: Long("1"),
+			jsonSchema: {
+				bsonType: [ 'object' ],
+				properties: {
+					truth_quat_CON2ECEF3: { bsonType: [ 'double' ] },
+					TIME_NANOSECONDS_TAI: { bsonType: [ 'long' ] },
+					truth_quat_CON2ECEF1: { bsonType: [ 'double' ] },
+					truth_quat_CON2ECEF4: { bsonType: [ 'double' ] },
+					DATA_DELTA_ANGLE1: { bsonType: [ 'int', 'double' ] },
+					OMPS_Range_M1: { bsonType: [ 'double', 'int' ] },
+					truth_vel_CON_ECEF_ECEF_MpS1: { bsonType: [ 'double' ] },
+					truth_quat_CON2ECEF2: { bsonType: [ 'double' ] },
+					DATA_DELTA_VEL2: { bsonType: [ 'double', 'int' ] },
+					DATA_DELTA_VEL1: { bsonType: [ 'double', 'int' ] },
+					truth_pos_CON_ECEF_ECEF_M1: { bsonType: [ 'double', 'int' ] },
+					OMPS_DopplerSpeed_MpS2: { bsonType: [ 'double', 'int' ] },
+					meta: {
+						bsonType: [ 'object' ],
+						properties: { device: { bsonType: [Array] } }
+					},
+					OMPS_Range_M3: { bsonType: [ 'double', 'int' ] },
+					OMPS_Range_M4: { bsonType: [ 'double', 'int' ] },
+					truth_vel_CON_ECEF_ECEF_MpS3: { bsonType: [ 'double' ] },
+					DATA_DELTA_ANGLE2: { bsonType: [ 'double', 'int' ] },
+					OMPS_DopplerSpeed_MpS3: { bsonType: [ 'int', 'double' ] },
+					DATA_DELTA_VEL3: { bsonType: [ 'double', 'int' ] },
+					truth_pos_CON_ECEF_ECEF_M2: { bsonType: [ 'int', 'double' ] },
+					time: { bsonType: [ 'date' ] },
+					truth_vel_CON_ECEF_ECEF_MpS2: { bsonType: [ 'double' ] },
+					OMPS_DopplerSpeed_MpS4: { bsonType: [ 'double', 'int' ] },
+					truth_pos_CON_ECEF_ECEF_M3: { bsonType: [ 'int', 'double' ] },
+					DATA_DELTA_ANGLE3: { bsonType: [ 'int', 'double' ] },
+					OMPS_Range_M2: { bsonType: [ 'int', 'double' ] },
+					OMPS_DopplerSpeed_MpS1: { bsonType: [ 'double', 'int' ] },
+					_id: { bsonType: [ 'objectId' ] }
+				}
+			}
+		}
+	}
+)
+
