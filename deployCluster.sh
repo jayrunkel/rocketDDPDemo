@@ -43,6 +43,8 @@ mongorestore --uri $CONNECTION_STR --username $DBUSER --password $DBUSER_PASS --
 
 
 # Load data in S3 bucket
+aws s3 cp . s3://carefirst-poc/ --recursive
+
 # Set up AIM role
 # Configure bucket security
 
