@@ -26,7 +26,9 @@ There are two main collections used in the demo:
 * launchData
 * notes
 
-This data can be found in the file ~/data/aerospace.archive.gz
+This data can be found in the file ~/data/atlas/aerospace.archive.gz
+
+```mongorestore --uri $CONNECTION_STR --username $DBUSER --password $DBUSER_PASS --gzip --archive=./data/atlas/aerospace.archive.gz```
 
 ## Data Federation Configuration
 
@@ -61,7 +63,19 @@ The following aggregation queries should be loaded into Compass
    * Data Near Bounds
 3. Data Lake -> launchData collection
    * ReadingCountByDevice
-   
+
+## Charts Dashboard
+
+
+## Atlas Search/Charts Search Analytics React App
+
+[Github repository](https://github.com/ranfysvalle02/reactivesearch-mdb)
+
+1. Clone the repository
+2. Deploy as App Services application using Realm-Cli
+3. Configure:
+   - DB Connection information
+   - Charts dashboard
 
 # DEMO SCRIPT
 
