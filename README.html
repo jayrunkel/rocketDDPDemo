@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<h1>MONGODB DEVELOPER DATA PLATFORM ROCKET DEMO</h1>
+
+<p>This demonstration shows how the various components of MongoDB's
+Developer Data Platform (DDP) can be used together to support real-time
+analytics. It uses an open source data set from a Blue Origin launch
+along with some made up data.</p>
+
+<p>The demonstration shows how a company could use MongoDB Atlas to
+manage and perform analytics on the data generated during a rocket
+launch. A typical rocket launch spans an eight hour period from the
+time the initial countdown begins until the rocket payload is in
+orbit. During this eight hour window, approximately 1 million metrics
+are generated per second by sensors capturing the rocket
+performance. </p>
+
+<p>While the metrics make up the bulk of the data in this scenario, there
+are two other sources of data: notes and weather data. Notes are
+created by both rocket engineers and an automated system. The rocket
+engineers create notes when they want to mark a time period or
+situation that they want to remember to revisit after the launch has
+been completed. An automated system (implemented as Atlas triggers) is
+continuously watching the parameters as they stream in and creates
+notes whenever parameters reach thresholds that are out of
+bounds. Weather data is stored in a S3 bucket and analyzed in
+combination with the launch data post launch.</p>
+
+<p>The demonstrate consists of 4 parts (or acts):</p>
+
+<ol>
+<li>Atlas Cluster and Data
+Demonstration of Atlas, the Atlas cluster deployed for the
+demonstration, and overview of the document model for two main
+Atlas collections used to store the launch data: launchData and notes.</li>
+<li>Real-time analytics
+Demonstration of how MongoDB can be used to perform real-time
+analytics on the data during launch. 
+<ul>
+<li>Compass is used to review a number of aggregation queries on the launch data and notes
+collections. </li>
+<li>A charts dashboard is displayed to show how Charts visualizations can
+be created to analyze the same data</li>
+</ul></li>
+<li>Search analytics
+This section of the demonstration focuses on two areas:
+<ul>
+<li>How Atlas Search can be used for analytics (facet
+counts associated with search queries)</li>
+<li>How various DDP platform can be used in combination. This is
+shown by showing a simple react app that supports Atlas search
+with faceted navigation in combination with Charts. Entering a
+search phrase, selecting facets, and clicking on search results
+(notes) updates the time range for the charts shown in the
+previous step to the time context of the selected note.</li>
+</ul></li>
+<li>Post launch analytics over a variety of MongoDB and non-MongoDB
+data sources.
+This section shows how Atlas Data Lake, Data Federation, and Atlas
+SQL can be used to analyze data post launch. Data is pulled from
+three data sources: Atlas cluster, Atlas Data Lake, and Data
+Federation. Data Lake is configured to take daily snapshots of the
+Atlas cluster so it has a historical record of previous
+launches. Data Federation is used to create a federated endpoint
+that allows for the combined analysis of the current launch,
+historical launches along with the weather data stored in
+S3. During the demo, this data is analyzed using Compass (MQL),
+DBeaver (SQL), and Tableau.</li>
+</ol>
+
+<p>Atlas Search
+Compass
+Demo App
+4. Data Federation, Data Lake, &amp; Atlas SQL
+Compass
+S3
+SQL Client
+Tableau</p>
+
+<p><img src="./images/demoArchitecture.png" alt="Demonstration Architecture" title="" /></p>
+
+<h1>DEMO SETUP</h1>
+
+<h2>Atlas Configuration</h2>
+
+<p>The Atlas configuration components consist of:</p>
+
+<ol>
+<li>M30 replica set plus a M50 analytics node</li>
+<li>Data Lake pipeline to archive the aerospace database, launchData collection</li>
+<li>Data Federation configuration combining three data sources:
+<ul>
+<li>Atlas cluster</li>
+<li>Data Lake</li>
+<li>S3 bucket with weather data</li>
+</ul></li>
+<li>Charts Dashboard to review launch data</li>
+<li>Triggers to generate notes for out of bound parameters (the code for this is fake, e.g., doesn't really work)</li>
+<li>Atlas Search indexes to facilitate the note search and corresponding facets.</li>
+<li>Atlas Search/Charts React App <a href="runkel-rfv-demo-tyypa.mongodbstitch.com">app</a>, <a href="https://github.com/ranfysvalle02/reactivesearch-mdb">github</a></li>
+<li>Tableau connected to the Data Federation Endpoint using Tableau connector</li>
+<li>DBeaver to execute SQL queries against the Data Federation Endpoint
+(Atlas SQL).</li>
+</ol>
+
+<h2>Atlas Cluster Data</h2>
+
+<p>There are two main collections used in the demo:</p>
+
+<ul>
+<li>launchData</li>
+<li>notes</li>
+</ul>
+
+<p>This data can be found in the file ~/data/atlas/aerospace.archive.gz</p>
+
+<p><code>mongorestore --uri $CONNECTION_STR --username $DBUSER --password $DBUSER_PASS --gzip --archive=./data/atlas/aerospace.archive.gz</code></p>
+
+<h2>Data Federation Configuration</h2>
+
+<p>The configuration for the data federation can be found in the dataFederationConfiguration.json file.</p>
+
+<p>The following schema files were created for Atlas SQL:</p>
+
+<ul>
+<li>Data Lake schema: dLakeLaunchDataSchema.json</li>
+<li>Schema for S3 bucket: s3SolarWindSchema.json</li>
+</ul>
+
+<p>Use sqlSetSchema to update the schemas</p>
+
+<h2>S3</h2>
+
+<p>The S3 bucket contains a single folder called SolarWinds. The contents of this folder are all the files found in the json files found in the ~/Data/solar-wind/json directory plus the SolarWindAll<em>2020</em>10<em>13.json file. The SolarWindAll</em>2020<em>10</em>13.json file contains all the same documents as the ~/Data/solar-wind/json directory, but the dates in the all.json file are set to match the launchData.</p>
+
+<h2>Tableau</h2>
+
+<p>Load the LaunchDayPlasma.twb workspace into Tableau</p>
+
+<p>To set up the Tableau connector use the combination of the Federated Endpoint URI plus the database name defined in the Data Federation Endpoint connection configuration. Don't use "myFederatedDatabase".</p>
+
+<h2>Compass</h2>
+
+<p>The following aggregation queries should be loaded into Compass</p>
+
+<ol>
+<li>Atlas Cluster -> aerospace database -> launchData collection
+<ul>
+<li>ReadingCountsByDevice</li>
+<li>rollingWindowCalc</li>
+</ul></li>
+<li>Atlas Cluster -> aerospace database -> notes collection
+<ul>
+<li>searchMetaFacets</li>
+<li>Data Near Bounds</li>
+</ul></li>
+<li>Data Lake -> launchData collection
+<ul>
+<li>ReadingCountByDevice</li>
+</ul></li>
+</ol>
+
+<h2>Charts Dashboard</h2>
+
+<h2>Atlas Search/Charts Search Analytics React App</h2>
+
+<p><a href="https://github.com/ranfysvalle02/reactivesearch-mdb">Github repository</a></p>
+
+<ol>
+<li>Clone the repository</li>
+<li>Deploy as App Services application using Realm-Cli</li>
+<li>Configure:
+<ul>
+<li>DB Connection information</li>
+<li>Charts dashboard</li>
+</ul></li>
+</ol>
+
+<h1>DEMO SCRIPT</h1>
+
+<p>See this <a href="https://docs.google.com/presentation/d/1dNBiLadWn2thuiVTlG62leawAoE-QEDBHUJlMr-7fSo/edit?usp=sharing">google drive</a> deck for a set of slides summarizing the demo and providing a screenshot of each demo step.</p>
+
+<p><a href="https://www.notion.so/jayrunkel/Forester-Wave-05Aug2022-d94f4b4e240043cb86dc686792590c46">Notion</a> has some additional information as well. </p>
+
+</body>
+</html>
