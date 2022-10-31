@@ -90,7 +90,7 @@ The Atlas configuration components consist of:
 4. Charts Dashboard to review launch data
 5. Triggers to generate notes for out of bound parameters (the code for this is fake, e.g., doesn't really work)
 6. Atlas Search indexes to facilitate the note search and corresponding facets.
-7. Atlas Search/Charts React App [app](runkel-rfv-demo-tyypa.mongodbstitch.com), [github](https://github.com/ranfysvalle02/reactivesearch-mdb)
+7. Atlas Search/Charts React App [app](https://runkel-rfv-demo-tyypa.mongodbstitch.com), [github](https://github.com/ranfysvalle02/reactivesearch-mdb)
 8. Tableau connected to the Data Federation Endpoint using Tableau connector
 9. DBeaver to execute SQL queries against the Data Federation Endpoint
    (Atlas SQL).
@@ -157,4 +157,3 @@ The following aggregation queries should be loaded into Compass
 
 See this [google drive](https://docs.google.com/presentation/d/1dNBiLadWn2thuiVTlG62leawAoE-QEDBHUJlMr-7fSo/edit?usp=sharing) deck for a set of slides summarizing the demo and providing a screenshot of each demo step.
 
-[Notion](https://www.notion.so/jayrunkel/Forester-Wave-05Aug2022-d94f4b4e240043cb86dc686792590c46) has some additional information as well. 
