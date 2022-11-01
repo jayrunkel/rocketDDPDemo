@@ -24,12 +24,15 @@ notes whenever parameters reach thresholds that are out of
 bounds. Weather data is stored in a S3 bucket and analyzed in
 combination with the launch data post launch.
 
+![Demonstration Architecture](./images/demoArchitecture.png)
+
 The demonstrate consists of 4 parts (or acts):
 
 1. Atlas Cluster and Data
    Demonstration of Atlas, the Atlas cluster deployed for the
    demonstration, and overview of the document model for two main
    Atlas collections used to store the launch data: launchData and notes.
+   
 2. Real-time analytics
    Demonstration of how MongoDB can be used to perform real-time
    analytics on the data during launch. 
@@ -37,6 +40,7 @@ The demonstrate consists of 4 parts (or acts):
       collections. 
     * A charts dashboard is displayed to show how Charts visualizations can
 	  be created to analyze the same data
+	  
 3. Search analytics
    This section of the demonstration focuses on two areas:
     * How Atlas Search can be used for analytics (facet
@@ -47,6 +51,7 @@ The demonstrate consists of 4 parts (or acts):
       search phrase, selecting facets, and clicking on search results
       (notes) updates the time range for the charts shown in the
       previous step to the time context of the selected note.
+	  
 4. Post launch analytics over a variety of MongoDB and non-MongoDB
    data sources.
    This section shows how Atlas Data Lake, Data Federation, and Atlas
@@ -60,20 +65,9 @@ The demonstrate consists of 4 parts (or acts):
    S3. During the demo, this data is analyzed using Compass (MQL),
    DBeaver (SQL), and Tableau.
    
-Atlas Search
-Compass
-Demo App
-4. Data Federation, Data Lake, & Atlas SQL
-Compass
-S3
-SQL Client
-Tableau
 
 
 
-
-
-![Demonstration Architecture](./images/demoArchitecture.png)
 
 # DEMO SETUP
 
@@ -102,7 +96,7 @@ There are two main collections used in the demo:
 * launchData
 * notes
 
-This data can be found in the file ~/data/atlas/aerospace.archive.gz
+This data can be found in the file ~/data/atlas/aerospace.archive.gz and restored to a database using the command below:
 
 ```mongorestore --uri $CONNECTION_STR --username $DBUSER --password $DBUSER_PASS --gzip --archive=./data/atlas/aerospace.archive.gz```
 

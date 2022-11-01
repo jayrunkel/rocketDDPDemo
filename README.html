@@ -38,24 +38,28 @@ notes whenever parameters reach thresholds that are out of
 bounds. Weather data is stored in a S3 bucket and analyzed in
 combination with the launch data post launch.</p>
 
+<p><img src="./images/demoArchitecture.png" alt="Demonstration Architecture" title="" /></p>
+
 <p>The demonstrate consists of 4 parts (or acts):</p>
 
 <ol>
-<li>Atlas Cluster and Data
+<li><p>Atlas Cluster and Data
 Demonstration of Atlas, the Atlas cluster deployed for the
 demonstration, and overview of the document model for two main
-Atlas collections used to store the launch data: launchData and notes.</li>
-<li>Real-time analytics
+Atlas collections used to store the launch data: launchData and notes.</p></li>
+<li><p>Real-time analytics
 Demonstration of how MongoDB can be used to perform real-time
-analytics on the data during launch. 
+analytics on the data during launch. </p>
+
 <ul>
 <li>Compass is used to review a number of aggregation queries on the launch data and notes
 collections. </li>
 <li>A charts dashboard is displayed to show how Charts visualizations can
 be created to analyze the same data</li>
 </ul></li>
-<li>Search analytics
-This section of the demonstration focuses on two areas:
+<li><p>Search analytics
+This section of the demonstration focuses on two areas:</p>
+
 <ul>
 <li>How Atlas Search can be used for analytics (facet
 counts associated with search queries)</li>
@@ -66,7 +70,7 @@ search phrase, selecting facets, and clicking on search results
 (notes) updates the time range for the charts shown in the
 previous step to the time context of the selected note.</li>
 </ul></li>
-<li>Post launch analytics over a variety of MongoDB and non-MongoDB
+<li><p>Post launch analytics over a variety of MongoDB and non-MongoDB
 data sources.
 This section shows how Atlas Data Lake, Data Federation, and Atlas
 SQL can be used to analyze data post launch. Data is pulled from
@@ -77,19 +81,8 @@ launches. Data Federation is used to create a federated endpoint
 that allows for the combined analysis of the current launch,
 historical launches along with the weather data stored in
 S3. During the demo, this data is analyzed using Compass (MQL),
-DBeaver (SQL), and Tableau.</li>
+DBeaver (SQL), and Tableau.</p></li>
 </ol>
-
-<p>Atlas Search
-Compass
-Demo App
-4. Data Federation, Data Lake, &amp; Atlas SQL
-Compass
-S3
-SQL Client
-Tableau</p>
-
-<p><img src="./images/demoArchitecture.png" alt="Demonstration Architecture" title="" /></p>
 
 <h1>DEMO SETUP</h1>
 
@@ -109,7 +102,7 @@ Tableau</p>
 <li>Charts Dashboard to review launch data</li>
 <li>Triggers to generate notes for out of bound parameters (the code for this is fake, e.g., doesn't really work)</li>
 <li>Atlas Search indexes to facilitate the note search and corresponding facets.</li>
-<li>Atlas Search/Charts React App <a href="runkel-rfv-demo-tyypa.mongodbstitch.com">app</a>, <a href="https://github.com/ranfysvalle02/reactivesearch-mdb">github</a></li>
+<li>Atlas Search/Charts React App <a href="https://runkel-rfv-demo-tyypa.mongodbstitch.com">app</a>, <a href="https://github.com/ranfysvalle02/reactivesearch-mdb">github</a></li>
 <li>Tableau connected to the Data Federation Endpoint using Tableau connector</li>
 <li>DBeaver to execute SQL queries against the Data Federation Endpoint
 (Atlas SQL).</li>
@@ -124,7 +117,7 @@ Tableau</p>
 <li>notes</li>
 </ul>
 
-<p>This data can be found in the file ~/data/atlas/aerospace.archive.gz</p>
+<p>This data can be found in the file ~/data/atlas/aerospace.archive.gz and restored to a database using the command below:</p>
 
 <p><code>mongorestore --uri $CONNECTION_STR --username $DBUSER --password $DBUSER_PASS --gzip --archive=./data/atlas/aerospace.archive.gz</code></p>
 
@@ -191,8 +184,6 @@ Tableau</p>
 <h1>DEMO SCRIPT</h1>
 
 <p>See this <a href="https://docs.google.com/presentation/d/1dNBiLadWn2thuiVTlG62leawAoE-QEDBHUJlMr-7fSo/edit?usp=sharing">google drive</a> deck for a set of slides summarizing the demo and providing a screenshot of each demo step.</p>
-
-<p><a href="https://www.notion.so/jayrunkel/Forester-Wave-05Aug2022-d94f4b4e240043cb86dc686792590c46">Notion</a> has some additional information as well. </p>
 
 </body>
 </html>
