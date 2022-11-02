@@ -135,6 +135,13 @@ The following aggregation queries should be loaded into Compass
    * ReadingCountByDevice
 
 ## Charts Dashboard
+The charts dashboard file is located in `./charts/LaunchData.charts`
+
+## Data Lake
+
+A Data Lake pipeline should be set up on the launchData collection. The backup policy should be daily. The partition attributes should be set to:
+  * meta.device
+  * time
 
 
 ## Atlas Search/Charts Search Analytics React App
