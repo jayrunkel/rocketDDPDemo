@@ -19,7 +19,7 @@ created by both rocket engineers and an automated system. The rocket
 engineers create notes when they want to mark a time period or
 situation that they want to remember to revisit after the launch has
 been completed. An automated system (implemented as Atlas triggers) is
-continuously watching the parameters as they stream in and creates
+continuously watching the metrics as they stream in and creates
 notes whenever parameters reach thresholds that are out of
 bounds. Weather data is stored in a S3 bucket and analyzed in
 combination with the launch data post launch.
@@ -96,24 +96,55 @@ There are two main collections used in the demo:
 * launchData
 * notes
 
-This data can be found in the file ~/data/atlas/aerospace.archive.gz and restored to a database using the command below:
+This data can be found in the file `~/data/atlas/aerospace.archive.gz` and restored to a database using the command below:
 
 ```mongorestore --uri $CONNECTION_STR --username $DBUSER --password $DBUSER_PASS --gzip --archive=./data/atlas/aerospace.archive.gz```
 
 ## Data Federation Configuration
 
-The configuration for the data federation can be found in the dataFederationConfiguration.json file.
+The configuration for the data federation can be found in the `~/dataFederation/dataFederationConfiguration.json` file.
 
 The following schema files were created for Atlas SQL:
 
-- Data Lake schema: dLakeLaunchDataSchema.json
-- Schema for S3 bucket: s3SolarWindSchema.json
+- Data Lake schema: `~/dataLake/dLakeLaunchDataSchema.json`
+- Schema for S3 bucket: `~/dataFederation/s3SolarWindSchema.json`
 
-Use sqlSetSchema to update the schemas
+Use sqlSetSchema to update the schemas. Create the data federation endpoint in the Atlas GUI and then connect to data federation using mongosh. Execute the following sequence of commands:
+
+```
+use LaunchData
+db.runCommand({
+  sqlSetSchema: "<name of the first data lake collection>",
+  schema: {
+    "version" : 1,
+	"jsonSchema": <contents of dLakeLaunchDataSchema.json>
+  }
+})
+use ClimateData
+db.runCommand({
+  sqlSetSchema: "SolarWind",
+  schema: {
+    "version" : 1,
+	"jsonSchema": <contents of s3SolarWindSchema.json>
+  }
+})
+```	
 
 ## S3
 
 The S3 bucket contains a single folder called SolarWinds. The contents of this folder are all the files found in the json files found in the ~/Data/solar-wind/json directory plus the SolarWindAll_2020_10_13.json file. The SolarWindAll_2020_10_13.json file contains all the same documents as the ~/Data/solar-wind/json directory, but the dates in the all.json file are set to match the launchData.
+
+Set up the S3 bucket using the following steps:
+1. Create a S3 bucket
+2. Create a folder called `SolarWinds` in the S3 bucket
+3. Copy all the files from ~/Data into the `SolarWinds` folder.
+
+The following aws cli command can be used to copy the files:
+
+```
+cd ~/Data
+aws s3 cp *.json s3://rocket-data-archive/ --recursive
+```
 
 
 ## Tableau
@@ -131,8 +162,10 @@ The following aggregation queries should be loaded into Compass
 2. Atlas Cluster -> aerospace database -> notes collection
    * searchMetaFacets
    * Data Near Bounds
-3. Data Lake -> launchData collection
+3. Data Lake -> launchData collection (the one you set the schema on above)
    * ReadingCountByDevice
+
+This queries can be found in `~/compass/lauchDataAggs.js`
 
 ## Charts Dashboard
 The charts dashboard file is located in `./charts/LaunchData.charts`

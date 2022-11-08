@@ -256,6 +256,7 @@
 // Blue Origin Collections
 // ================================================================
 //
+// IGNORE - not required for the demo
 // Clean up
 
 [{
